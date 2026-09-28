@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import NavBar from './components/NavBar'; 
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import axios from 'axios';
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
   return (
-    <div>
-      <div>University Lost Found System</div>
-      <div>
-        <p>Welcome!</p>
-      </div>
-    </div>
+<Router>
+  <NavBar user={user} setUser={setUser}/>
+  <Routes>
+    <Route path="/" element={<Home user={user} error={error}/>}/>
+    <Route path="/login" element={<Login setUser={setUser}/>}/>
+    <Route path="/register" element={<Register/>}/>
+  </Routes>
+</Router>
   );
 }
 
