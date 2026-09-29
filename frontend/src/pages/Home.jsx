@@ -36,6 +36,16 @@ const Home = ({ user, error }) => {
           </div>
         )}
       </div>
+      <div className="flex flex-col items-center justify-center mt-4 space-y-4">
+        <div>
+        <Link
+          to="/report"
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+        >
+          Report a lost
+        </Link>
+      </div>
+      </div>
     </div>
   );
 };
