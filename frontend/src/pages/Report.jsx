@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Report = () => {
@@ -8,7 +7,6 @@ const Report = () => {
     description: "",
   });
 
-  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -25,22 +23,24 @@ const Report = () => {
     setSuccess("");
 
     try {
-      const res = await axios.post("/api/lost", formData);
+      const token = localStorage.getItem("token");
+      const res = await axios.post("/api/lost", formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setSuccess(res.data.message || "Report submitted successfully");
       setFormData({ Topic: "", description: "" });
     } catch (err) {
       setError(err.response?.data?.message || "Report submission failed");
     }
-    navigate("/");
   };
 
   return (
     <div
       className="min-h-screen flex items-start
-        justify-start bg-teal-100 p-4"
+        justify-start p-4"
     >
       <div
-        className="bg-gray-100 p-8 rounded-lg shadow-md
+        className="backdrop-blur-sm backdrop-brightness-95 p-8 rounded-lg shadow-md
         w-full max-w-lg text-center
         hover:shadow-lg transition-shadow
         duration-300"

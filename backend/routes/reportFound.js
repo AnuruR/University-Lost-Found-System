@@ -7,13 +7,22 @@ const router = express.Router();
 router.post("/", protect, async (req, res) => {
   const { Topic, description } = req.body;
   try {
-    const goods = await Goods.create({ Topic, description, reporter: req.user._id });
+    const goods = await Goods.create({ 
+      Topic, 
+      description,
+      reporter: req.user._id,
+      Lost: false,
+      Found: true
+    });
+    
     res.status(201).json({
-      message: "Report successful",
+      message: "Found item reported successfully",
       user: {
         _id: goods._id,
         Topic: goods.Topic,
         description: goods.description,
+        Lost: goods.Lost,
+        Found: goods.Found
       },
     });
   } catch (error) {

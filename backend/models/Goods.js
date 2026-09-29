@@ -10,6 +10,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       lowercase: true,
     },
+    reporter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    Lost: {
+      type: Boolean,
+      default: true,
+    },
+    Found: {
+      type: Boolean,
+      default: false,
+    },
+    Claimed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

@@ -21,6 +21,7 @@ const Login = ({setUser}) => {
     e.preventDefault();
     try {
       const res = await axios.post("/api/auth/login", formData);
+      localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
       navigate("/");
     } catch (err) {
@@ -29,8 +30,8 @@ const Login = ({setUser}) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="backdrop-blur-sm backdrop-brightness-95 p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
         {error && <p className="text-red-500">{error}</p>}
