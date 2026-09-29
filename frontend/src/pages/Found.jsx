@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Report = () => {
+const Found = () => {
   const [formData, setFormData] = useState({
     Topic: "",
     description: "",
@@ -25,11 +25,11 @@ const Report = () => {
     setSuccess("");
 
     try {
-      const res = await axios.post("/api/lost", formData);
-      setSuccess(res.data.message || "Report submitted successfully");
+      const res = await axios.post("/api/found", formData);
+      setSuccess(res.data.message || "Found submitted successfully");
       setFormData({ Topic: "", description: "" });
     } catch (err) {
-      setError(err.response?.data?.message || "Report submission failed");
+      setError(err.response?.data?.message || "Found submission failed");
     }
     navigate("/");
   };
@@ -45,7 +45,7 @@ const Report = () => {
         hover:shadow-lg transition-shadow
         duration-300"
       >
-        <h1 className="text-2xl font-bold mb-6">Report a Lost Item</h1>
+        <h1 className="text-2xl font-bold mb-6">Found a Lost Item</h1>
         {error && <p className="text-red-600 mb-4">{error}</p>}
         {success && <p className="text-green-700 mb-4">{success}</p>}
         <form onSubmit={handleSubmit}>
@@ -76,7 +76,7 @@ const Report = () => {
             type="submit"
             className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600"
           >
-            Submit report
+            Submit Found
           </button>
         </form>
       </div>
@@ -84,4 +84,4 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default Found;

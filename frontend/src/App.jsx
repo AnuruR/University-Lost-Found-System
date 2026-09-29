@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Report from './pages/Report';
+import Found from './pages/Found';
 import axios from 'axios';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <Route path="/login" element={<Login setUser={setUser}/>}/>
     <Route path="/register" element={<Register/>}/>
     <Route path="/report" element={<Report user={user} error={error}/>}/>
+    <Route path="/found" element={<Found user={user} error={error}/>}/>
   </Routes>
 </Router>
   );
