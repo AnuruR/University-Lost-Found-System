@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import MapSelector from '../components/MapSelector';
 
 function ReportItem() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function ReportItem() {
   
   const [itemType, setItemType] = useState(initialType);
   const [user, setUser] = useState(null);
+  const [mapLocation, setMapLocation] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -102,18 +104,9 @@ function ReportItem() {
             <option value="other">Other Location</option>
           </select>
 
-          {/* Google Map of Faculty of Engineering, Ruhuna */}
-          <div className="map-container" style={{ borderRadius: '10px', overflow: 'hidden', border: '1px solid var(--border-pink)' }}>
-            <iframe
-              title="Faculty of Engineering Ruhuna Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.433435100085!2d80.22896587498918!3d6.077180993908865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae1741a3a41300d%3A0xb36f2e0325d7c92b!2sFaculty%20of%20Engineering%2C%20University%20of%20Ruhuna!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk"
-              width="100%"
-              height="180"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+          {/* Interactive Leaflet Map */}
+          <div style={{ marginTop: '1rem' }}>
+            <MapSelector onLocationSelect={setMapLocation} />
           </div>
         </div>
 
