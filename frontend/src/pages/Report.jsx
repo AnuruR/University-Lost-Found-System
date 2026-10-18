@@ -35,51 +35,65 @@ const Report = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-start
-        justify-start p-4"
-    >
-      <div
-        className="backdrop-blur-sm backdrop-brightness-95 p-8 rounded-lg shadow-md
-        w-full max-w-lg text-center
-        hover:shadow-lg transition-shadow
-        duration-300"
-      >
-        <h1 className="text-2xl font-bold mb-6">Report a Lost Item</h1>
-        {error && <p className="text-red-600 mb-4">{error}</p>}
-        {success && <p className="text-green-700 mb-4">{success}</p>}
-        <form onSubmit={handleSubmit}>
-          <label className="block text-left mb-2" htmlFor="topic">
-            Topic
-          </label>
-          <input
-            className="w-full p-3 border border-gray-300 rounded-md mb-4"
-            id="topic"
-            type="text"
-            name="Topic"
-            value={formData.Topic}
-            onChange={handleChange}
-            required
-          />
-          <label className="block text-left mb-2" htmlFor="description">
-            Description
-          </label>
-          <textarea
-            className="w-full p-3 border border-gray-300 rounded-md mb-4"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
+    <div className="flex flex-1 items-center justify-center px-5 py-12 sm:px-8">
+      <section className="w-full max-w-2xl rounded-[2rem] border border-white/80 bg-white/70 p-7 shadow-2xl shadow-teal-950/10 backdrop-blur-xl sm:p-10">
+        <span className="inline-flex rounded-full bg-amber-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-amber-800">
+          Lost item
+        </span>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+          Tell us what’s missing
+        </h1>
+        <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
+          Share a few details so someone on campus can help get it back to you.
+        </p>
+        {error && (
+          <p role="alert" className="mt-6 rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            {error}
+          </p>
+        )}
+        {success && (
+          <p role="status" className="mt-6 rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+            {success}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="topic">
+              Item name
+            </label>
+            <input
+              className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10"
+              id="topic"
+              type="text"
+              name="Topic"
+              value={formData.Topic}
+              onChange={handleChange}
+              placeholder="e.g. Blue water bottle"
+              required
+            />
+          </div>
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="description">
+              Details
+            </label>
+            <textarea
+              className="min-h-32 w-full resize-y rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Where and when did you last see it? Add any details that could help identify it."
+              required
+            />
+          </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600"
+            className="w-full rounded-2xl bg-teal-700 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-900/15 transition hover:-translate-y-0.5 hover:bg-teal-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
           >
-            Submit report
+            Submit lost item report
           </button>
         </form>
-      </div>
+      </section>
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
-  const [formData, setformData] = useState({
+  const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
@@ -12,7 +12,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setformData({
+    setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
@@ -21,79 +21,93 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/auth/register", formData);
+      await axios.post("/api/auth/register", formData);
       navigate("/login");
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      setError(err.response?.data?.message || "Registration failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="backdrop-blur-sm backdrop-brightness-95 p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+    <div className="flex flex-1 items-center justify-center px-5 py-12 sm:px-8">
+      <section className="w-full max-w-md rounded-[2rem] border border-white/80 bg-white/70 p-7 shadow-2xl shadow-teal-950/10 backdrop-blur-xl sm:p-10">
+        <div className="mb-8 text-center">
+          <span className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-teal-700 text-sm font-bold tracking-wide text-white shadow-lg shadow-teal-900/15">
+            LF
+          </span>
+          <h1 className="mt-5 text-3xl font-semibold tracking-tight text-slate-950">
+            Join the community
+          </h1>
+          <p className="mt-2 text-sm leading-6 text-slate-500">
+            Create an account to help lost items find their way home.
+          </p>
+        </div>
 
-        {error && <p className="text-red-500">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="username">Username</label>
+        {error && (
+          <p role="alert" className="mb-5 rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            {error}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="username">
+              Username
+            </label>
             <input
-              className="w-full p-3 border border-gray-300
-            rounded-md focus:ring-2 focus:ring-blue-200
-            outline-none focus:border-blue-400"
+              className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10"
+              id="username"
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              placeholder="Enter your username"
-              autoComplete="off"
+              placeholder="Choose a username"
+              autoComplete="username"
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="email">
               Email
             </label>
             <input
-              className="w-full p-3 border border-gray-300
-            rounded-md focus:ring-2 focus:ring-blue-200
-            outline-none focus:border-blue-400"
+              className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10"
+              id="email"
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
-              autoComplete="off"
+              placeholder="you@university.edu"
+              autoComplete="email"
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-700" htmlFor="password">
               Password
             </label>
             <input
-              className="w-full p-3 border border-gray-300
-            rounded-md focus:ring-2 focus:ring-blue-200
-            outline-none focus:border-blue-400"
+              className="w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10"
+              id="password"
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
+              placeholder="Create a password"
+              autoComplete="new-password"
               required
             />
           </div>
-          <button className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200">
-            Login
+          <button className="w-full rounded-2xl bg-teal-700 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-900/15 transition hover:-translate-y-0.5 hover:bg-teal-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700">
+            Create account
           </button>
         </form>
-      </div>
+        <p className="mt-7 text-center text-sm text-slate-500">
+          Already a member?{" "}
+          <Link className="font-semibold text-teal-800 hover:text-teal-950" to="/login">
+            Log in
+          </Link>
+        </p>
+      </section>
     </div>
   );
 };
