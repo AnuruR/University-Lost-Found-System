@@ -1,4 +1,5 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -39,8 +40,20 @@ router.post("/login", async (req, res) => {
 
     // Verify user exists and password matches
     if (user && (await user.matchPassword(password))) {
+      const secret = process.env.JWT_SECRET;
+      if (!secret) {
+        return res.status(500).json({ message: "JWT_SECRET is not configured" });
+      }
+
+      const token = jwt.sign(
+        { sub: user._id.toString() },
+        secret,
+        { expiresIn: "7d" },
+      );
+
       res.status(200).json({
         message: "Login successful",
+        token,
         user: {
           _id: user._id,
           username: user.username,
