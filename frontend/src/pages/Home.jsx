@@ -1,6 +1,24 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Home = ({ user }) => {
+  const [itemCounts, setItemCounts] = useState(null);
+  const [countsError, setCountsError] = useState("");
+
+  useEffect(() => {
+    const loadItemCounts = async () => {
+      try {
+        const { data } = await axios.get("/api/stats");
+        setItemCounts(data);
+      } catch {
+        setCountsError("Item counts are currently unavailable.");
+      }
+    };
+
+    loadItemCounts();
+  }, []);
+
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pb-16 pt-10 sm:px-8 sm:pt-16">
       <section className="relative isolate overflow-hidden rounded-[2rem] border border-white/80 bg-white/55 px-6 py-12 shadow-xl shadow-teal-950/5 backdrop-blur-xl sm:px-12 sm:py-16 lg:px-16">
@@ -47,6 +65,30 @@ const Home = ({ user }) => {
             </div>
           )}
         </div>
+      </section>
+
+      <section className="mt-8 grid gap-5 sm:grid-cols-2">
+        <article className="rounded-3xl border border-white/80 bg-white/65 p-6 text-center shadow-lg shadow-teal-950/5 backdrop-blur-lg">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700">
+            Lost items
+          </p>
+          <p className="mt-2 text-4xl font-semibold tracking-tight text-slate-950">
+            {itemCounts?.lostItems ?? "—"}
+          </p>
+        </article>
+        <article className="rounded-3xl border border-white/80 bg-white/65 p-6 text-center shadow-lg shadow-teal-950/5 backdrop-blur-lg">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700">
+            Found items
+          </p>
+          <p className="mt-2 text-4xl font-semibold tracking-tight text-slate-950">
+            {itemCounts?.foundItems ?? "—"}
+          </p>
+        </article>
+        {countsError && (
+          <p role="alert" className="text-center text-sm text-rose-700 sm:col-span-2">
+            {countsError}
+          </p>
+        )}
       </section>
 
       <section className="mt-8 grid gap-5 md:grid-cols-3">
